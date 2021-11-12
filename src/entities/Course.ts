@@ -9,7 +9,7 @@ class Course {
   readonly id: string;
 
   @Column()
-  name: string;
+  course: string;
 
   @Column()
   description: string;

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { ListUserService } from "../services/ListUserService";
+import { ListUserService } from "../../services/UserServices/ListUserService";
 
 
 class ListUserController {

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { UpdateUserService } from "../services/UpdateUserService";
+import { UpdateUserService } from "../../services/UserServices/UpdateUserService";
 
 
 class UpdateUserController {
@@ -33,7 +33,7 @@ class UpdateUserController {
     const userUpdate = {
       message: "Email updated successfully!",
       userNameUpdated: {
-        name: request.body.email,
+        email: request.body.email,
       }
     }
 
@@ -51,7 +51,7 @@ class UpdateUserController {
     const userUpdate = {
       message: "Password updated successfully!",
       userNameUpdated: {
-        name: request.body.password,
+        password: request.body.password,
       }
     }
 

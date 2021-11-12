@@ -1,39 +1,39 @@
 import { getCustomRepository } from "typeorm"
 
-import { CourseRepository } from "../repositories/CourseRepository"
+import { CourseRepository } from "../../repositories/CourseRepository"
 
 
 interface ICourseRequest {
-  name: string;
+  course: string;
   description: string;
   vacancies: string;
 }
 
 class CreateCourseService {
-  async execute({ name, description, vacancies }: ICourseRequest) {
+  async execute({ course, description, vacancies }: ICourseRequest) {
     const courseRepository = getCustomRepository(CourseRepository)
 
-    if (!name) {
+    if (!course) {
       throw new Error("Name incorrect!")
     }
 
     const courseExists = await courseRepository.findOne({
-      name
+      course
     })
 
     if (courseExists) {
       throw new Error("This course already exists!")
     }
 
-    const course = courseRepository.create({
-      name,
+    const courseName = courseRepository.create({
+      course,
       description,
       vacancies
     })
 
-    await courseRepository.save(course)
+    await courseRepository.save(courseName)
 
-    return course
+    return courseName
   }
 }
 

@@ -3,13 +3,16 @@ import { Router } from "express"
 import { ensureAuthenticate } from "./middleware/ensureAuthenticate"
 import { ensureAdmin } from "./middleware/ensureAdmin"
 
-import { AuthenticateUserController } from "./controllers/AuthenticateUserController"
+import { AuthenticateUserController } from "./controllers/UserController/AuthenticateUserController"
 
-import { CreateCourseController } from "./controllers/CreateCourseController"
-import { CreateUserController } from "./controllers/CreateUserController"
-import { DeleteUserController } from "./controllers/DeleteUserController"
-import { ListUserController } from "./controllers/ListUserController"
-import { UpdateUserController } from "./controllers/UpdateUserController"
+import { CreateUserController } from "./controllers/UserController/CreateUserController"
+import { ListUserController } from "./controllers/UserController/ListUserController"
+import { UpdateUserController } from "./controllers/UserController/UpdateUserController"
+import { DeleteUserController } from "./controllers/UserController/DeleteUserController"
+
+import { CreateCourseController } from "./controllers/CourseController/CreateCourseController"
+import { ListCoursesController } from "./controllers/CourseController/ListCoursesController"
+import { DeleteCourseController } from "./controllers/CourseController/DeleteCourseController"
 
 const routes = Router()
 
@@ -21,6 +24,8 @@ const updateUserController = new UpdateUserController()
 const deleteUserController = new DeleteUserController()
 
 const createCourseController = new CreateCourseController()
+const listCoursesController = new ListCoursesController()
+const deleteCourseController = new DeleteCourseController()
 
 routes.post("/login", authenticateUserController.handle)
 
@@ -34,5 +39,7 @@ routes.delete("/users/:id", ensureAuthenticate, deleteUserController.handle)
 
 //courses
 routes.post("/courses", ensureAuthenticate, ensureAdmin, createCourseController.handle)
+routes.get("/courses", listCoursesController.handle)
+routes.delete("/courses/:id", deleteCourseController.handle)
 
 export { routes }
