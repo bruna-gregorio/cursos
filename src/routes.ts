@@ -12,6 +12,7 @@ import { DeleteUserController } from "./controllers/UserController/DeleteUserCon
 
 import { CreateCourseController } from "./controllers/CourseController/CreateCourseController"
 import { ListCoursesController } from "./controllers/CourseController/ListCoursesController"
+import { UpdateCourseController } from "./controllers/CourseController/UpdateCourseController"
 import { DeleteCourseController } from "./controllers/CourseController/DeleteCourseController"
 
 const routes = Router()
@@ -25,6 +26,7 @@ const deleteUserController = new DeleteUserController()
 
 const createCourseController = new CreateCourseController()
 const listCoursesController = new ListCoursesController()
+const updateCourseController = new UpdateCourseController()
 const deleteCourseController = new DeleteCourseController()
 
 routes.post("/login", authenticateUserController.handle)
@@ -40,6 +42,9 @@ routes.delete("/users/:id", ensureAuthenticate, deleteUserController.handle)
 //courses
 routes.post("/courses", ensureAuthenticate, ensureAdmin, createCourseController.handle)
 routes.get("/courses", listCoursesController.handle)
+routes.put("/courses/name/:id", updateCourseController.updateCourse)
+routes.put("/courses/description/:id", updateCourseController.updateDescription)
+routes.put("/courses/vacancies/:id", updateCourseController.updateVacancies)
 routes.delete("/courses/:id", deleteCourseController.handle)
 
 export { routes }
