@@ -1,5 +1,7 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { v4 as uuid } from "uuid";
+
+import { Course } from "./Course";
 
 
 @Entity("users")
@@ -19,6 +21,13 @@ class User {
 
   @Column()
   admin: boolean;
+
+  @Column()
+  course: string;
+
+  @JoinColumn({ name: "course" })
+  @ManyToOne(() => Course)
+  courseType: Course
 
   @CreateDateColumn()
   create_at: Date;
