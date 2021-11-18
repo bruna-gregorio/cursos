@@ -3,18 +3,18 @@ import { getCustomRepository } from "typeorm"
 import { UserRepository } from "../../repositories/UserRepository"
 
 
-class ListUserService {
+class ListUserAdminService {
   async execute() {
     const userRepository = getCustomRepository(UserRepository)
 
-    const listUser = await userRepository.find({
+    const userAdmin = await userRepository.find({
       where: {
-        admin: false
+        admin: true
       }
     })
 
-    return listUser
+    return userAdmin
   }
 }
 
-export { ListUserService }
+export { ListUserAdminService }

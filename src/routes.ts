@@ -15,6 +15,10 @@ import { ListCoursesController } from "./controllers/CourseController/ListCourse
 import { UpdateCourseController } from "./controllers/CourseController/UpdateCourseController"
 import { DeleteCourseController } from "./controllers/CourseController/DeleteCourseController"
 
+import { FilterbyCourseController } from "./controllers/UserController/FilterbyCourseController"
+
+import { ListUserAdminController } from "./controllers/UserController/ListUserAdminController"
+
 const routes = Router()
 
 const authenticateUserController = new AuthenticateUserController()
@@ -28,6 +32,10 @@ const createCourseController = new CreateCourseController()
 const listCoursesController = new ListCoursesController()
 const updateCourseController = new UpdateCourseController()
 const deleteCourseController = new DeleteCourseController()
+
+const filterbyCourseController = new FilterbyCourseController()
+
+const listUserAdminController = new ListUserAdminController()
 
 routes.post("/login", authenticateUserController.handle)
 
@@ -46,5 +54,10 @@ routes.put("/courses/name/:id", updateCourseController.updateCourse)
 routes.put("/courses/description/:id", updateCourseController.updateDescription)
 routes.put("/courses/vacancies/:id", updateCourseController.updateVacancies)
 routes.delete("/courses/:id", deleteCourseController.handle)
+
+routes.get("/course/filter/:id", filterbyCourseController.handle)
+
+routes.get("/users/admin", listUserAdminController.handle)
+
 
 export { routes }

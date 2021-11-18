@@ -1,5 +1,5 @@
 import { hash } from "bcryptjs"
-import { getCustomRepository } from "typeorm"
+import { getCustomRepository, IsNull } from "typeorm"
 
 import { UserRepository } from "../../repositories/UserRepository"
 import { CourseRepository } from "../../repositories/CourseRepository"
@@ -30,13 +30,17 @@ class CreateUserService {
       throw new Error("User already exists!")
     }
 
-    const courseDontExists = await courseRepository.find({
-      course
-    })
+    // const courseDontExists = await courseRepository.find({
+    //   where: [
+    //     {
+    //       id: null
+    //     }
+    //   ]
+    // })
 
-    if (courseDontExists) {
-      throw new Error("This course do not exists!")
-    }
+    // if (courseDontExists) {
+    //   throw new Error("This course do not exists!")
+    // }
 
     const passwordHash = await hash(password, 8)
 
@@ -51,6 +55,7 @@ class CreateUserService {
     await userRepository.save(user)
 
     return user
+
   }
 }
 

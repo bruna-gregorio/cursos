@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToMany, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { v4 as uuid } from "uuid";
 
 import { Course } from "./Course";
@@ -26,7 +26,7 @@ class User {
   course: string;
 
   @JoinColumn({ name: "course" })
-  @ManyToOne(() => Course)
+  @ManyToMany(() => Course)
   courseType: Course
 
   @CreateDateColumn()
