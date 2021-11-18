@@ -19,7 +19,9 @@ import { FilterbyCourseController } from "./controllers/UserController/FilterbyC
 
 import { ListUserAdminController } from "./controllers/UserController/ListUserAdminController"
 
+
 const routes = Router()
+
 
 const authenticateUserController = new AuthenticateUserController()
 
@@ -28,6 +30,8 @@ const listUserController = new ListUserController()
 const updateUserController = new UpdateUserController()
 const deleteUserController = new DeleteUserController()
 
+const listUserAdminController = new ListUserAdminController()
+
 const createCourseController = new CreateCourseController()
 const listCoursesController = new ListCoursesController()
 const updateCourseController = new UpdateCourseController()
@@ -35,7 +39,6 @@ const deleteCourseController = new DeleteCourseController()
 
 const filterbyCourseController = new FilterbyCourseController()
 
-const listUserAdminController = new ListUserAdminController()
 
 routes.post("/login", authenticateUserController.handle)
 
@@ -47,17 +50,17 @@ routes.put("/users/email/:id", ensureAuthenticate, updateUserController.updateEm
 routes.put("/users/password/:id", ensureAuthenticate, updateUserController.updatePassword)
 routes.delete("/users/:id", ensureAuthenticate, deleteUserController.handle)
 
+routes.get("/users/admin", listUserAdminController.handle)
+
 //courses
 routes.post("/courses", ensureAuthenticate, ensureAdmin, createCourseController.handle)
 routes.get("/courses", listCoursesController.handle)
-routes.put("/courses/name/:id", updateCourseController.updateCourse)
-routes.put("/courses/description/:id", updateCourseController.updateDescription)
-routes.put("/courses/vacancies/:id", updateCourseController.updateVacancies)
-routes.delete("/courses/:id", deleteCourseController.handle)
+routes.put("/courses/name/:id", ensureAuthenticate, ensureAdmin, updateCourseController.updateCourse)
+routes.put("/courses/description/:id", ensureAuthenticate, ensureAdmin, updateCourseController.updateDescription)
+routes.put("/courses/vacancies/:id", ensureAuthenticate, ensureAdmin, updateCourseController.updateVacancies)
+routes.delete("/courses/:id", ensureAuthenticate, ensureAdmin, deleteCourseController.handle)
 
 routes.get("/course/filter/:id", filterbyCourseController.handle)
-
-routes.get("/users/admin", listUserAdminController.handle)
 
 
 export { routes }
