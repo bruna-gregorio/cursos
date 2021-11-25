@@ -1,3 +1,4 @@
+import { hash } from "bcryptjs"
 import { getCustomRepository } from "typeorm"
 
 import { UserRepository } from "../../repositories/UserRepository"
@@ -6,6 +7,12 @@ import { UserRepository } from "../../repositories/UserRepository"
 class UpdateUserService {
   async updateNameUser(id: string, name: string) {
     const userRepository = getCustomRepository(UserRepository)
+
+    const idExists = await userRepository.findOne(id)
+
+    if (!idExists) {
+      throw new Error("This user doesn't exists!")
+    }
 
     const updateNameUser = await userRepository.update({
       id,
@@ -19,6 +26,12 @@ class UpdateUserService {
   async updateEmailUser(id: string, email: string) {
     const userRepository = getCustomRepository(UserRepository)
 
+    const idExists = await userRepository.findOne(id)
+
+    if (!idExists) {
+      throw new Error("This user doesn't exists!")
+    }
+
     const updateEmailUser = await userRepository.update({
       id,
     }, {
@@ -31,10 +44,18 @@ class UpdateUserService {
   async updatePasswordUser(id: string, password: string) {
     const userRepository = getCustomRepository(UserRepository)
 
+    const idExists = await userRepository.findOne(id)
+
+    if (!idExists) {
+      throw new Error("This user doesn't exists!")
+    }
+
+    const passwordHash = await hash(password, 8)
+
     const updatePasswordUser = await userRepository.update({
       id,
     }, {
-      password
+      password: passwordHash
     })
 
     return updatePasswordUser

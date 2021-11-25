@@ -10,7 +10,7 @@ class DeleteUserService {
     const idExists = await userRepository.findOne(id)
 
     if (!idExists) {
-      throw new Error("This user doesn't exists!")
+      throw new Error("Sorry, This user doesn't exists!")
     }
 
     const deleteUser = await userRepository.delete(id)
