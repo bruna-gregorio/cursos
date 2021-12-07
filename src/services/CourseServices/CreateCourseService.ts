@@ -7,10 +7,13 @@ interface ICourseRequest {
   course: string;
   description: string;
   vacancies: string;
+  duration: string;
+  value: Number;
+  image: string;
 }
 
 class CreateCourseService {
-  async execute({ course, description, vacancies }: ICourseRequest) {
+  async execute({ course, description, vacancies, duration, value, image }: ICourseRequest) {
     const courseRepository = getCustomRepository(CourseRepository)
 
     if (!course) {
@@ -28,7 +31,10 @@ class CreateCourseService {
     const courseName = courseRepository.create({
       course,
       description,
-      vacancies
+      vacancies,
+      duration,
+      value,
+      image
     })
 
     await courseRepository.save(courseName)

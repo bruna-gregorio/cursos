@@ -18,6 +18,7 @@ import { DeleteCourseController } from "./controllers/CourseController/DeleteCou
 import { FilterbyCourseController } from "./controllers/UserController/FilterbyCourseController"
 
 import { ListUserAdminController } from "./controllers/UserController/ListUserAdminController"
+import { ListOneController } from "./controllers/UserController/ListOneController"
 
 
 const routes = Router()
@@ -39,6 +40,8 @@ const deleteCourseController = new DeleteCourseController()
 
 const filterbyCourseController = new FilterbyCourseController()
 
+const listOneController = new ListOneController()
+
 
 routes.post("/login", authenticateUserController.handle)
 
@@ -52,13 +55,17 @@ routes.delete("/users/:id", ensureAuthenticate, deleteUserController.handle)
 
 routes.get("/users/admin", listUserAdminController.handle)
 
+routes.get("/profile", listOneController.handle)
+
 //courses
-routes.post("/courses", ensureAuthenticate, ensureAdmin, createCourseController.handle)
+routes.post("/courses", createCourseController.handle)
 routes.get("/courses", listCoursesController.handle)
-routes.put("/courses/name/:id", ensureAuthenticate, ensureAdmin, updateCourseController.updateCourse)
-routes.put("/courses/description/:id", ensureAuthenticate, ensureAdmin, updateCourseController.updateDescription)
-routes.put("/courses/vacancies/:id", ensureAuthenticate, ensureAdmin, updateCourseController.updateVacancies)
-routes.delete("/courses/:id", ensureAuthenticate, ensureAdmin, deleteCourseController.handle)
+routes.put("/courses/name/:id", /*ensureAuthenticate, ensureAdmin,*/ updateCourseController.updateCourse)
+routes.put("/courses/description/:id", /*ensureAuthenticate, ensureAdmin,*/ updateCourseController.updateDescription)
+routes.put("/courses/vacancies/:id", /*ensureAuthenticate, ensureAdmin,*/ updateCourseController.updateVacancies)
+routes.put("/courses/image/:id", /*ensureAuthenticate, ensureAdmin,*/ updateCourseController.updateImage)
+routes.put("/courses/value/:id", /*ensureAuthenticate, ensureAdmin,*/ updateCourseController.updateValue)
+routes.delete("/courses/:id", /*ensureAuthenticate, ensureAdmin,*/ deleteCourseController.handle)
 
 routes.get("/course/filter/:id", filterbyCourseController.handle)
 

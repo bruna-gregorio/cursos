@@ -5,11 +5,11 @@ import { CreateCourseService } from "../../services/CourseServices/CreateCourseS
 
 class CreateCourseController {
   async handle(request: Request, response: Response) {
-    const { course, description, vacancies } = request.body
+    const { course, description, vacancies, duration, value, image } = request.body
 
     const createCourseService = new CreateCourseService()
 
-    const courseName = await createCourseService.execute({ course, description, vacancies })
+    const courseName = await createCourseService.execute({ course, description, vacancies, duration, value, image })
 
     return response.json(courseName)
   }

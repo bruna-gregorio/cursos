@@ -9,7 +9,7 @@ class FilterbyCourseController {
 
     const filterbyCourseService = new FilterbyCourseService()
 
-    const filter = await filterbyCourseService.execute(id)
+    const filter = await filterbyCourseService.execute(id, id)
 
     response.json(filter)
   }

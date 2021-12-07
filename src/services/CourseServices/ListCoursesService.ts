@@ -1,6 +1,6 @@
 import { getCustomRepository } from "typeorm"
-import { CourseRepository } from "../../repositories/CourseRepository"
 
+import { CourseRepository } from "../../repositories/CourseRepository"
 
 
 class ListCoursesService {

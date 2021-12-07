@@ -17,6 +17,15 @@ class Course {
   @Column()
   vacancies: string;
 
+  @Column()
+  image: string;
+
+  @Column()
+  duration: string;
+
+  @Column()
+  value: Number;
+
   @CreateDateColumn()
   create_at: Date;
 

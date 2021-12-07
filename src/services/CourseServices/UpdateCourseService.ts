@@ -39,6 +39,30 @@ class UpdateCourseService {
 
     return updateVacancies
   }
+
+  async updateImage(id: string, image: string) {
+    const courseRepository = getCustomRepository(CourseRepository)
+
+    const updateImage = courseRepository.update({
+      id
+    }, {
+      image
+    })
+
+    return updateImage
+  }
+
+  async updateValue(id: string, value: string) {
+    const courseRepository = getCustomRepository(CourseRepository)
+
+    const updateValue = courseRepository.update({
+      id
+    }, {
+      value
+    })
+
+    return updateValue
+  }
 }
 
 export { UpdateCourseService }

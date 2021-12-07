@@ -58,7 +58,41 @@ class UpdateCourseController {
     return response.json(courseUpdate)
   }
 
+  async updateImage(request: Request, response: Response) {
+    const { id } = request.params
+    const { image } = request.body
 
+    const updateCourseService = new UpdateCourseService()
+
+    await updateCourseService.updateImage(id, image)
+
+    const courseUpdate = {
+      message: "Image updated successfully!",
+      courseImageUpdated: {
+        vacancies: request.body.image,
+      }
+    }
+
+    return response.json(courseUpdate)
+  }
+
+  async updateValue(request: Request, response: Response) {
+    const { id } = request.params
+    const { value } = request.body
+
+    const updateCourseService = new UpdateCourseService()
+
+    await updateCourseService.updateValue(id, value)
+
+    const courseUpdate = {
+      message: "Image updated successfully!",
+      courseValueUpdated: {
+        value: request.body.value,
+      }
+    }
+
+    return response.json(courseUpdate)
+  }
 }
 
 export { UpdateCourseController }
