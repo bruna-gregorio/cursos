@@ -19,6 +19,7 @@ import { FilterbyCourseController } from "./controllers/UserController/FilterbyC
 
 import { ListUserAdminController } from "./controllers/UserController/ListUserAdminController"
 import { ListOneController } from "./controllers/UserController/ListOneController"
+import { ListOneCourseController } from "./controllers/CourseController/ListOneCourseController"
 
 
 const routes = Router()
@@ -37,6 +38,8 @@ const createCourseController = new CreateCourseController()
 const listCoursesController = new ListCoursesController()
 const updateCourseController = new UpdateCourseController()
 const deleteCourseController = new DeleteCourseController()
+
+const listOneCourseController = new ListOneCourseController()
 
 const filterbyCourseController = new FilterbyCourseController()
 
@@ -58,6 +61,7 @@ routes.get("/users/admin", listUserAdminController.handle)
 routes.get("/profile", listOneController.handle)
 
 //courses
+routes.get("/courses/:id", listOneCourseController.handle)
 routes.post("/courses", createCourseController.handle)
 routes.get("/courses", listCoursesController.handle)
 routes.put("/courses/name/:id", /*ensureAuthenticate, ensureAdmin,*/ updateCourseController.updateCourse)

@@ -1,8 +1,8 @@
 import { getCustomRepository } from "typeorm"
 import { sign } from "jsonwebtoken"
+import { compare } from "bcryptjs"
 
 import { UserRepository } from "../../repositories/UserRepository"
-import { compare } from "bcryptjs"
 
 
 class AuthenticateUserService {
