@@ -4,10 +4,20 @@ import { ListCoursesService } from "../../services/CourseServices/ListCoursesSer
 
 
 class ListCoursesController {
-  async handle(request: Request, response: Response) {
+  async listAllCourse(request: Request, response: Response) {
     const listCoursesService = new ListCoursesService()
 
-    const listCourses = await listCoursesService.execute()
+    const listCourses = await listCoursesService.listAllCourses()
+
+    return response.json(listCourses)
+  }
+
+  async listOneCourse(request: Request, response: Response) {
+    const { id } = request.params
+
+    const listCoursesService = new ListCoursesService()
+
+    const listCourses = await listCoursesService.listOneCourse(id)
 
     return response.json(listCourses)
   }

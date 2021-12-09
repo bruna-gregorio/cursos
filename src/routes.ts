@@ -6,7 +6,7 @@ import { ensureAdmin } from "./middleware/ensureAdmin"
 import { AuthenticateUserController } from "./controllers/UserController/AuthenticateUserController"
 
 import { CreateUserController } from "./controllers/UserController/CreateUserController"
-import { ListUserController } from "./controllers/UserController/ListUserController"
+import { ListUsersController } from "./controllers/UserController/ListUsersController"
 import { UpdateUserController } from "./controllers/UserController/UpdateUserController"
 import { DeleteUserController } from "./controllers/UserController/DeleteUserController"
 
@@ -17,10 +17,6 @@ import { DeleteCourseController } from "./controllers/CourseController/DeleteCou
 
 import { FilterbyCourseController } from "./controllers/UserController/FilterbyCourseController"
 
-import { ListUserAdminController } from "./controllers/UserController/ListUserAdminController"
-import { ListOneController } from "./controllers/UserController/ListOneController"
-import { ListOneCourseController } from "./controllers/CourseController/ListOneCourseController"
-
 
 const routes = Router()
 
@@ -28,42 +24,37 @@ const routes = Router()
 const authenticateUserController = new AuthenticateUserController()
 
 const createUserController = new CreateUserController()
-const listUserController = new ListUserController()
+const listUsersController = new ListUsersController()
 const updateUserController = new UpdateUserController()
 const deleteUserController = new DeleteUserController()
 
-const listUserAdminController = new ListUserAdminController()
 
 const createCourseController = new CreateCourseController()
 const listCoursesController = new ListCoursesController()
 const updateCourseController = new UpdateCourseController()
 const deleteCourseController = new DeleteCourseController()
 
-const listOneCourseController = new ListOneCourseController()
 
 const filterbyCourseController = new FilterbyCourseController()
-
-const listOneController = new ListOneController()
 
 
 routes.post("/login", authenticateUserController.handle)
 
 //users
 routes.post("/users", createUserController.handle)
-routes.get("/users", ensureAuthenticate, listUserController.handle)
+routes.get("/users", ensureAuthenticate, listUsersController.listStudents)
+routes.get("/users/admin", listUsersController.listAdmin)
+routes.get("/profile", listUsersController.listOneUser)
 routes.put("/users/name/:id", ensureAuthenticate, updateUserController.updateName)
 routes.put("/users/email/:id", ensureAuthenticate, updateUserController.updateEmail)
 routes.put("/users/password/:id", ensureAuthenticate, updateUserController.updatePassword)
 routes.delete("/users/:id", ensureAuthenticate, deleteUserController.handle)
 
-routes.get("/users/admin", listUserAdminController.handle)
-
-routes.get("/profile", listOneController.handle)
 
 //courses
-routes.get("/courses/:id", listOneCourseController.handle)
 routes.post("/courses", createCourseController.handle)
-routes.get("/courses", listCoursesController.handle)
+routes.get("/courses", listCoursesController.listAllCourse)
+routes.get("/courses/:id", listCoursesController.listOneCourse)
 routes.put("/courses/name/:id", /*ensureAuthenticate, ensureAdmin,*/ updateCourseController.updateCourse)
 routes.put("/courses/description/:id", /*ensureAuthenticate, ensureAdmin,*/ updateCourseController.updateDescription)
 routes.put("/courses/vacancies/:id", /*ensureAuthenticate, ensureAdmin,*/ updateCourseController.updateVacancies)
