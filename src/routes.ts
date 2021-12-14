@@ -45,7 +45,7 @@ routes.post("/users", createUserController.handle)
 routes.get("/users", ensureAuthenticate, listUsersController.listStudents)
 routes.get("/users/admin", listUsersController.listAdmin)
 routes.get("/profile", listUsersController.listOneUser)
-routes.put("/users/:id", updateUserController.handle)
+routes.put("/users/:id", ensureAuthenticate, updateUserController.handle)
 routes.delete("/users/:id", ensureAuthenticate, deleteUserController.handle)
 
 
