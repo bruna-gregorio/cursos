@@ -1,64 +1,33 @@
-import { hash } from "bcryptjs"
 import { getCustomRepository } from "typeorm"
 
 import { UserRepository } from "../../repositories/UserRepository"
 
+interface IUpdateRequest {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  admin: boolean;
+  course: string;
+}
 
 class UpdateUserService {
-  async updateNameUser(id: string, name: string) {
+  async execute({ id, name, email, password, admin, course }: IUpdateRequest) {
     const userRepository = getCustomRepository(UserRepository)
 
-    const idExists = await userRepository.findOne(id)
+    const user = await userRepository.findOne(id)
 
-    if (!idExists) {
-      throw new Error("This user doesn't exists!")
+    if (!user) {
+      throw new Error("This user does not exists!")
     }
 
-    const updateNameUser = await userRepository.update({
-      id,
-    }, {
-      name
-    })
+    user.name = name ? name : user.name
+    user.email = email ? email : user.email
+    user.password = password ? password : user.password
+    user.admin = admin ? admin : user.admin
+    user.course = course ? course : user.course
 
-    return updateNameUser
-  }
-
-  async updateEmailUser(id: string, email: string) {
-    const userRepository = getCustomRepository(UserRepository)
-
-    const idExists = await userRepository.findOne(id)
-
-    if (!idExists) {
-      throw new Error("This user doesn't exists!")
-    }
-
-    const updateEmailUser = await userRepository.update({
-      id,
-    }, {
-      email
-    })
-
-    return updateEmailUser
-  }
-
-  async updatePasswordUser(id: string, password: string) {
-    const userRepository = getCustomRepository(UserRepository)
-
-    const idExists = await userRepository.findOne(id)
-
-    if (!idExists) {
-      throw new Error("This user doesn't exists!")
-    }
-
-    const passwordHash = await hash(password, 8)
-
-    const updatePasswordUser = await userRepository.update({
-      id,
-    }, {
-      password: passwordHash
-    })
-
-    return updatePasswordUser
+    return user
   }
 }
 

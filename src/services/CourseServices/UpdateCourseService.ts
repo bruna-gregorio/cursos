@@ -2,66 +2,36 @@ import { getCustomRepository } from "typeorm"
 
 import { CourseRepository } from "../../repositories/CourseRepository"
 
+interface IUpdateRequest {
+  id: string;
+  course: string;
+  description: string;
+  vacancies: string;
+  duration: string;
+  value: Number;
+  image: string;
+}
 
 class UpdateCourseService {
-  async updateName(id: string, course: string) {
+  async execute({ id, course, description, vacancies, duration, value, image }: IUpdateRequest) {
     const courseRepository = getCustomRepository(CourseRepository)
 
-    const updateName = courseRepository.update({
-      id
-    }, {
-      course
-    })
+    const courseExists = await courseRepository.findOne(id)
 
-    return updateName
-  }
+    if (!courseExists) {
+      throw new Error("Course does not exists")
+    }
 
-  async updateDescription(id: string, description: string) {
-    const courseRepository = getCustomRepository(CourseRepository)
+    courseExists.course = course ? course : courseExists.course
+    courseExists.description = description ? description : courseExists.description
+    courseExists.vacancies = vacancies ? vacancies : courseExists.vacancies
+    courseExists.duration = duration ? duration : courseExists.duration
+    courseExists.value = value ? value : courseExists.value
+    courseExists.image = image ? image : courseExists.image
 
-    const updateDescription = courseRepository.update({
-      id
-    }, {
-      description
-    })
+    await courseRepository.save(courseExists)
 
-    return updateDescription
-  }
-
-  async updateVacancies(id: string, vacancies: string) {
-    const courseRepository = getCustomRepository(CourseRepository)
-
-    const updateVacancies = courseRepository.update({
-      id
-    }, {
-      vacancies
-    })
-
-    return updateVacancies
-  }
-
-  async updateImage(id: string, image: string) {
-    const courseRepository = getCustomRepository(CourseRepository)
-
-    const updateImage = courseRepository.update({
-      id
-    }, {
-      image
-    })
-
-    return updateImage
-  }
-
-  async updateValue(id: string, value: string) {
-    const courseRepository = getCustomRepository(CourseRepository)
-
-    const updateValue = courseRepository.update({
-      id
-    }, {
-      value
-    })
-
-    return updateValue
+    return courseExists
   }
 }
 

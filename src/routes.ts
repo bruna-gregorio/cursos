@@ -45,22 +45,17 @@ routes.post("/users", createUserController.handle)
 routes.get("/users", ensureAuthenticate, listUsersController.listStudents)
 routes.get("/users/admin", listUsersController.listAdmin)
 routes.get("/profile", listUsersController.listOneUser)
-routes.put("/users/name/:id", ensureAuthenticate, updateUserController.updateName)
-routes.put("/users/email/:id", ensureAuthenticate, updateUserController.updateEmail)
-routes.put("/users/password/:id", ensureAuthenticate, updateUserController.updatePassword)
+routes.put("/users/:id", updateUserController.handle)
 routes.delete("/users/:id", ensureAuthenticate, deleteUserController.handle)
 
 
 //courses
-routes.post("/courses", createCourseController.handle)
+routes.post("/courses", ensureAuthenticate, ensureAdmin, createCourseController.handle)
 routes.get("/courses", listCoursesController.listAllCourse)
 routes.get("/courses/:id", listCoursesController.listOneCourse)
-routes.put("/courses/name/:id", /*ensureAuthenticate, ensureAdmin,*/ updateCourseController.updateCourse)
-routes.put("/courses/description/:id", /*ensureAuthenticate, ensureAdmin,*/ updateCourseController.updateDescription)
-routes.put("/courses/vacancies/:id", /*ensureAuthenticate, ensureAdmin,*/ updateCourseController.updateVacancies)
-routes.put("/courses/image/:id", /*ensureAuthenticate, ensureAdmin,*/ updateCourseController.updateImage)
-routes.put("/courses/value/:id", /*ensureAuthenticate, ensureAdmin,*/ updateCourseController.updateValue)
-routes.delete("/courses/:id", /*ensureAuthenticate, ensureAdmin,*/ deleteCourseController.handle)
+routes.put("/courses/:id", ensureAuthenticate, ensureAdmin, updateCourseController.handle)
+routes.delete("/courses/:id", ensureAuthenticate, ensureAdmin, deleteCourseController.handle)
+
 
 routes.get("/course/filter/:id", filterbyCourseController.handle)
 
