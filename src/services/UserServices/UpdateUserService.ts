@@ -30,6 +30,8 @@ class UpdateUserService {
     user.admin = admin ? admin : user.admin
     user.course = course ? course : user.course
 
+    await userRepository.save(user)
+
     return user
   }
 }
