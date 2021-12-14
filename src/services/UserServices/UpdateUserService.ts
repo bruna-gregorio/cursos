@@ -1,3 +1,4 @@
+import { hash } from "bcryptjs"
 import { getCustomRepository } from "typeorm"
 
 import { UserRepository } from "../../repositories/UserRepository"
@@ -21,9 +22,11 @@ class UpdateUserService {
       throw new Error("This user does not exists!")
     }
 
+    const passwordHash = await hash(password, 8)
+
     user.name = name ? name : user.name
     user.email = email ? email : user.email
-    user.password = password ? password : user.password
+    user.password = password ? password = passwordHash : user.password
     user.admin = admin ? admin : user.admin
     user.course = course ? course : user.course
 
